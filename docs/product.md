@@ -272,6 +272,25 @@ to durations, limits, doubles rewards or third-doubles prison outcome.
 - Turn identity and expected revision protect against old timers/commands
   affecting a new turn; duplicates cannot repeat transitions.
 
+## Money quantum clarification — 2026-11-06
+
+Source: /srv/agent-runtime/state/inbox/VOICE-20261106T183758232793Z-ed90e5/transcript.txt.
+The user proposes amounts in tens, illustrated by 1250 and 1210. Interpret the
+examples as a quantum of 10 in the quoted amount scale, not fractional tenths
+and not a quantum of 1000. Retire the CTO's unaccepted 1k recommendation.
+Accepted follow-up user decision: "Всегда вниз" (always down).
+For each nonnegative calculated monetary amount x, quantize once at the final
+operation boundary: Q(x)=10*floor(x/10). This applies to calculated starting
+capital, generated prices, rents, circuit rewards, mortgage advances and house
+resale proceeds. Keep intermediate rational arithmetic exact. A transfer debits
+and credits the same already-quantized amount; redemption uses the stored
+advance unchanged. Examples: 1254->1250, 1255->1250, 1259->1250, 1260->1260.
+For penalties quantize the positive amount owed before applying the debit;
+this does not authorize negative balances or signed-floor behavior.
+Do not silently rescale the user's k-labelled reference amounts or infer a
+new display conversion. Input validation/minimum-positive-amount policy remains
+for bounded design if needed; do not invent a minimum payment of 10.
+
 ## Product decisions reserved for the user
 
 - Changes to the product direction or core mechanics.
