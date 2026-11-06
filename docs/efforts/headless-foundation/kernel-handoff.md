@@ -2,10 +2,10 @@
 
 ```yaml
 id: TASK-hf-kernel
-revision: 1
+revision: 2
 effort: EFF-headless-foundation
 project: economic-board-game
-source_commit: 0674733f68b754a14a68c32e8a51e1451c046808
+source_commit: 5da5697afdb26f72e5d26873cc1ea623ea89d919
 owner: team-lead
 status: accepted
 ```
@@ -72,9 +72,14 @@ and residual risks. No completion claim without current-head acceptance evidence
 
 ## Dependencies
 
-TASK-hf-design accepted proposal and exact commit are mandatory. DO NOT START
-until Team Lead revision 2 pins proposal/base and final contract. This revision
-is decomposition only. TASK-hf-turns follows this task's accepted result.
+Technical kernel/setup direction is accepted by Team Lead at proposal
+5da5697afdb26f72e5d26873cc1ea623ea89d919; independent review is pending.
+Read docs/efforts/headless-foundation/design.md and
+openspec/changes/headless-foundation/{proposal.md,tasks.md,specs/headless-foundation/spec.md}
+at that SHA. This revision authorizes Explore/Propose only. Before Apply,
+resolve independent design-review findings and obtain Team Lead acceptance of
+your committed kernel proposal. Apply must use a fresh context. TASK-hf-turns
+follows the accepted kernel result; T06/T07 require separate CTO disposition.
 
 ## Delegated decisions
 
@@ -87,3 +92,16 @@ Typecheck and setup/validation/replay sequence tests, including repeated ties,
 invalid d6/random inputs, duplicate commands and stale revisions, no mutation
 on rejection, version mismatch, 2/6 counts and illegal counts. Core import and
 hidden I/O inspection. Exact-head independent review and CI when available.
+
+## Revision 2 integration clarification
+
+Own K01-K09. BeginTurns/active-turn records belong to turns; kernel ends at
+established setup order. For K06 prove no turn begins implicitly; defer the
+BeginTurns success assertion to T01. Do not implement a successful placeholder
+turn, timer policy or settlement path. Shared types may reserve explicit union
+variants but unsupported active-turn commands must reject atomically until
+turns integrates them. This is a temporary task boundary, not completed effort
+behavior. Keep the accepted execution/receipt contract extensible for turns.
+Research local npm/package availability, select compatible exact dev versions
+and lockfile without global installation. No networking in core. Source SHA
+pins proposal content; start base also includes this revised handoff.
