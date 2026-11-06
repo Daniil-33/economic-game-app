@@ -254,6 +254,24 @@ prior Node.js backend context). No frontend stack is accepted by this approval.
 First effort: deterministic headless StateMachine foundation; later base rules
 and simulation follow. Full-MVP readiness is not implied by starting foundation.
 
+## CTO interpretation: turn boundary execution — 2026-11-06
+
+Authority: CTO interpretation of accepted turn/time rules, resolving the Team
+Lead escalation in docs/efforts/headless-foundation/cto-escalation.md. No change
+to durations, limits, doubles rewards or third-doubles prison outcome.
+
+- A live player command must arrive with trusted logical time strictly less
+  than the current deadline. At equality the allowance is exhausted; Timeout
+  is eligible at or after the deadline. A late player command rejects without
+  implicitly triggering a different command's timeout effects.
+- First/second forced doubles preserve the current turn and its action quotas
+  for the promised 20-second continuation. Only after completion and mandatory
+  settlement does the earned doubles bonus start a fresh turn. Third doubles
+  takes the already accepted immediate-prison path before movement/reward,
+  ending the turn without a playable 20-second continuation.
+- Turn identity and expected revision protect against old timers/commands
+  affecting a new turn; duplicates cannot repeat transitions.
+
 ## Product decisions reserved for the user
 
 - Changes to the product direction or core mechanics.
