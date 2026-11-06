@@ -30,3 +30,20 @@ minimums. Resource limits, if necessary, SHALL be documented technical limits.
 Zero, nonmultiple-of-ten inputs and large integers round trip exactly. Invalid
 inputs reject without hidden time, randomness, I/O or mutation. Legacy core
 behavior and replay SHALL remain unchanged. Domain input validation is separate.
+
+### Public API and errors
+
+The package exports `quantizeMoney(numerator: bigint, denominator: bigint): bigint`,
+`parseMoney(input: unknown): bigint`, and `formatMoney(amount: bigint): string`.
+Quantization and formatting reject non-bigint runtime arguments with TypeError;
+quantization validates both operand types before ranges. Negative numerator or
+formatted amount, and zero/negative denominator, cause RangeError. Parsing rejects
+non-string input or noncanonical ASCII decimal syntax with TypeError, including
+all trailing line terminators. Codec input need not be a multiple of ten.
+Error message text is not a stable API contract.
+
+No finite economic maximum or artificial digit cap is imposed. Arithmetic,
+parsing, and formatting are subject to the host's native bigint, string and memory
+capacity; sufficiently large inputs can exhaust resources or cause native errors.
+This utility is not an untrusted-request admission boundary. Production resource
+limits and domain price validity require a separately accepted integration policy.
