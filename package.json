@@ -6,9 +6,10 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "tsc -p packages/game-core/tsconfig.json && tsc -p tsconfig.tests.json",
-    "typecheck": "tsc -p packages/game-core/tsconfig.json && tsc -p tsconfig.tests.json --noEmit",
-    "test": "npm run build && node --test dist/tests/*.test.js"
+    "build": "tsc -p packages/game-core/tsconfig.json && tsc -p tsconfig.tests.json && tsc -p tsconfig.runner.json",
+    "typecheck": "tsc -p packages/game-core/tsconfig.json && tsc -p tsconfig.tests.json --noEmit && tsc -p tsconfig.runner.json --noEmit",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "replay": "npm run build && node dist/headless-runner/main.js"
   },
   "devDependencies": {
     "@types/node": "26.0.0",

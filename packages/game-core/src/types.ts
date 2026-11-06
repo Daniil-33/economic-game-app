@@ -1,5 +1,6 @@
 export const RULES_VERSION = 'headless-foundation/v1' as const;
 export interface SessionConfig {
+  readonly scenarioId?: string;
   readonly stateVersion: 1;
   readonly rulesVersion: typeof RULES_VERSION;
 }
@@ -7,8 +8,8 @@ export type Actor = { readonly kind: 'system' } | { readonly kind: 'player'; rea
 export type Command =
   | { readonly kind: 'SetupRound' }
   | { readonly kind: 'BeginTurns' }
-  | { readonly kind: 'Roll' }
-  | { readonly kind: 'EndTurn' }
+  | { readonly kind: 'Roll'; readonly targetTurnId: string }
+  | { readonly kind: 'EndTurn'; readonly targetTurnId: string }
   | { readonly kind: 'Timeout'; readonly targetTurnId: string };
 export interface RequestIdentity {
   readonly commandVersion: 1;
@@ -24,7 +25,29 @@ export interface Envelope extends RequestIdentity {
 export type Setup =
   | { readonly phase: 'pending'; readonly groups: readonly (readonly string[])[] }
   | { readonly phase: 'complete'; readonly groups: readonly (readonly string[])[]; readonly order: readonly string[] };
+export interface ParticipantStatus {
+  readonly custody: 'free' | 'prison';
+  readonly doublesStreak: number;
+}
+export interface Turn {
+  readonly turnId: string;
+  readonly participantId: string;
+  readonly phase: 'awaiting-roll' | 'after-roll';
+  readonly startedAtMs: number;
+  readonly deadlineMs: number;
+  readonly roll: readonly number[] | null;
+  readonly housesUsed: number;
+  readonly offersUsed: number;
+  readonly settlement: string;
+}
 export type EventPayload =
+  | { readonly kind: 'TurnStarted'; readonly turnId: string; readonly participantId: string; readonly deadlineMs: number; readonly housesUsed: number; readonly offersUsed: number }
+  | { readonly kind: 'DiceRolled'; readonly turnId: string; readonly participantId: string; readonly dice: readonly number[]; readonly forced: boolean }
+  | { readonly kind: 'FixtureMoved'; readonly origin: string; readonly landing: string }
+  | { readonly kind: 'SettlementSatisfied'; readonly fixtureId: string }
+  | { readonly kind: 'TurnContinued'; readonly turnId: string; readonly deadlineMs: number; readonly housesUsed: number; readonly offersUsed: number }
+  | { readonly kind: 'PrisonEntered'; readonly participantId: string }
+  | { readonly kind: 'TurnCompleted'; readonly turnId: string; readonly participantId: string }
   | { readonly kind: 'SetupRolled'; readonly rolls: readonly { readonly participantId: string; readonly die: number }[] }
   | { readonly kind: 'SetupTiePending'; readonly participants: readonly string[] }
   | { readonly kind: 'SetupOrderEstablished'; readonly order: readonly string[] };
@@ -36,6 +59,10 @@ export interface Receipt {
   readonly consumedDice: number;
 }
 export interface GameState extends SessionConfig {
+  readonly scenarioId: string;
+  readonly statuses: Readonly<Record<string, ParticipantStatus>>;
+  readonly scenarioProgress: Readonly<Record<string, number>>;
+  readonly turn?: Turn;
   readonly revision: number;
   readonly lastNowMs: number;
   readonly participants: readonly string[];
@@ -45,7 +72,7 @@ export interface GameState extends SessionConfig {
 export type ErrorCode = 'INVALID_CONFIG' | 'INVALID_PARTICIPANTS' | 'UNSUPPORTED_VERSION'
   | 'INVALID_ENVELOPE' | 'INVALID_DICE' | 'ID_CONFLICT' | 'STALE_REVISION'
   | 'TIME_REGRESSION' | 'UNAUTHORIZED' | 'INVALID_PHASE' | 'UNSUPPORTED_BOUNDARY'
-  | 'DICE_COUNT' | 'REVISION_EXHAUSTED';
+  | 'DICE_COUNT' | 'REVISION_EXHAUSTED' | 'DEADLINE_REACHED' | 'DEADLINE_NOT_REACHED' | 'TURN_MISMATCH' | 'ROLL_REQUIRED';
 export type CreationResult = { readonly kind: 'created'; readonly state: GameState }
   | { readonly kind: 'rejected'; readonly error: ErrorCode };
 export type EngineResult =

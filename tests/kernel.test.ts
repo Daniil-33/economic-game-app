@@ -130,7 +130,7 @@ test('K05: exact explicit d6 counts, invalid values and sparse arrays are atomic
   reject(exhausted, request('last', Number.MAX_SAFE_INTEGER, [1, 6]), 'REVISION_EXHAUSTED');
 });
 
-test('K06: descending 2/6 setup ends without any turn and all turn commands reject', () => {
+test('K06: descending 2/6 setup ends without implicit turns; integrated commands preserve phase/actor checks', () => {
   for (const ids of [['A', 'B'], ['A', 'B', 'C', 'D', 'E', 'F']]) {
     const initial = session(ids);
     const dice = ids.map((_, i) => i + 1);
@@ -142,10 +142,13 @@ test('K06: descending 2/6 setup ends without any turn and all turn commands reje
     ]);
     assert.equal('turn' in result.state, false);
     reject(result.state, request('again', 1, dice), 'INVALID_PHASE');
-    for (const state of [initial, result.state]) for (const kind of ['BeginTurns', 'Roll', 'EndTurn', 'Timeout']) {
-      const command = kind === 'Timeout' ? { kind, targetTurnId: 't1' } : { kind };
-      reject(state, { ...request('turn', state.revision), command }, 'UNSUPPORTED_BOUNDARY');
+    reject(initial, { ...request('turn', 0, []), command: { kind: 'BeginTurns' } }, 'INVALID_PHASE');
+    for (const state of [initial, result.state]) for (const kind of ['Roll', 'EndTurn', 'Timeout']) {
+      reject(state, { ...request('turn', state.revision, []), command: { kind, targetTurnId: 't1' } },
+        kind === 'Timeout' ? 'INVALID_PHASE' : 'UNAUTHORIZED');
     }
+    const started = success(result.state, { ...request('turn', 1, []), command: { kind: 'BeginTurns' } });
+    assert.equal(started.state.turn?.participantId, ids.at(-1));
   }
 });
 
@@ -187,9 +190,9 @@ test('K08: independent complete replay includes success/rejection/conflict/stale
   }
   const one = replay();
   assert.deepEqual(one, replay());
-  assert.deepEqual(one.results.map(r => r.kind), ['success', 'duplicate', 'rejected', 'rejected', 'rejected', 'success', 'rejected', 'success', 'success', 'duplicate', 'rejected']);
+  assert.deepEqual(one.results.map(r => r.kind), ['success', 'duplicate', 'rejected', 'rejected', 'rejected', 'success', 'rejected', 'success', 'success', 'duplicate', 'success']);
   assert.deepEqual(one.results.map(r => r.consumedDice), [6, 0, 0, 0, 0, 2, 0, 2, 2, 0, 0]);
-  assert.equal(one.state.revision, 4);
+  assert.equal(one.state.revision, 5);
   assert.deepEqual(one.state.setup.phase === 'complete' && one.state.setup.order, ['A', 'C', 'B', 'E', 'D', 'F']);
-  assert.deepEqual(Object.keys(one.state.receipts), ['first', 'second', 'third', 'fourth']);
+  assert.deepEqual(Object.keys(one.state.receipts), ['first', 'second', 'third', 'fourth', 'start']);
 });

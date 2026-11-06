@@ -15,8 +15,8 @@ function actor(value: unknown): value is Actor {
   return record(value) && (value.kind === 'system' || (value.kind === 'player' && identifier(value.id)));
 }
 function command(value: unknown): value is Command {
-  return record(value) && (['SetupRound', 'BeginTurns', 'Roll', 'EndTurn'].includes(value.kind as string)
-    || (value.kind === 'Timeout' && identifier(value.targetTurnId)));
+  return record(value) && (['SetupRound', 'BeginTurns'].includes(value.kind as string)
+    || (['Roll', 'EndTurn', 'Timeout'].includes(value.kind as string) && identifier(value.targetTurnId)));
 }
 export function validateEnvelope(value: unknown): ErrorCode | null {
   if (!record(value)) return 'INVALID_ENVELOPE';
@@ -32,7 +32,7 @@ export function validateEnvelope(value: unknown): ErrorCode | null {
 }
 export function canonical(value: Envelope) {
   const actor: Actor = value.actor.kind === 'system' ? { kind: 'system' } : { kind: 'player', id: value.actor.id };
-  const command: Command = value.command.kind === 'Timeout'
-    ? { kind: 'Timeout', targetTurnId: value.command.targetTurnId } : { kind: value.command.kind };
+  const command: Command = value.command.kind === 'Roll' || value.command.kind === 'EndTurn' || value.command.kind === 'Timeout'
+    ? { kind: value.command.kind, targetTurnId: value.command.targetTurnId } : { kind: value.command.kind };
   return { commandVersion: value.commandVersion, expectedRevision: value.expectedRevision, actor, command };
 }
