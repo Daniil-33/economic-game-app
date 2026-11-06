@@ -101,3 +101,17 @@ hosting permissions, protection, PR and current-head CI. No push/PR/merge mutati
 was performed. Any new implementation head invalidates this head-specific
 acceptance until verification and independent review rerun. Further integration
 must check the resulting current head before merge; no gate is waived.
+
+## CI proposal: 6a551722008f05051d5a073c8ae054f0a6c1ae0c
+
+Accepted for fresh Apply under TASK-hf-ci handoff revision 1. Exact proposal
+read in full; base 7b14c3d93fe48f68707a135bc235728e1e930407. One stable
+headless-foundation job, PRs into main and all branch pushes, contents:read,
+checkout/setup-node v6, project Node 26, no credential persistence/cache/secrets,
+and install/typecheck/test/replay satisfy the bounded delivery design.
+
+Only .github/workflows/verify.yml and concise evidence may change. No scripts,
+dependencies, behavior, branch administration, publishing or additional PR.
+Engineer implements and verifies locally, then returns exact head for independent
+review and coordinated publication. Hosted success is not implied by local checks;
+current-published-head CI/review and protected main remain mandatory before merge.
