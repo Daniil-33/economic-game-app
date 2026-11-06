@@ -57,7 +57,7 @@ foundational choices to User. Concrete suggestions below remain unaccepted.
 | P1 CTO -> User | Exact special/chance indices and asset/group placement: approved explicit layout versus generated layouts with explicit constraints | Obtain a versioned explicit first production layout. Configurable synthetic layout remains possible but cannot complete default-board delivery. |
 | P2 CTO -> User | Catalog, reference prices, category/mechanic eligibility and selection distribution: explicit catalog selections versus defined weighted/uniform sampling, replacement and quotas | Obtain catalog/rank mapping and selection policy. No invented companies/prices or probability defaults. |
 | P3 CTO -> User | Price generation: strict vs nondecreasing adjacent ranks, within-group order, tier/rank mapping, distribution over admissible prices, and count/dice asset price policy | Confirm each rule; recommend strict adjacent ordinary ranks and separately specified special prices. +/-10% alone defines bounds, not distribution. Blocks production generator. |
-| P4 CTO -> User | Money denomination/quantum; integer vs rational balances; final rounding for generated prices, cash, each rent family and reward, including half ties | Recommend integer ledger, exact rational intermediates, quantization once per final calculation. CTO/User must choose units and rounding; accepted mortgage/resale floor rules remain binding. Range is a technical limit after catalog calibration, not an arbitrary new economic cap. Blocks numeric Apply. |
+| P4 resolved for independent arithmetic | User decision at 569a577: quoted amount scale, quantum 10, Q(x)=10*floor(x/10) for nonnegative final amounts | Exact intermediates; same quantized transfer debit/credit; positive penalty obligation; stored mortgage advance redeemed unchanged. No rescaling or minimum payment. Production input constraints and catalog-dependent bounds remain outside the arithmetic task. |
 | P5 CTO interpretation, User if foundational | Does N change board selection/layout, or only cash? Does S include all 28 fixed prices? | Recommend constant CLASSIC_40 composition for 2–6, N affecting cash only, S=sum(all 28 fixed prices). No production N mapping until confirmed. |
 | P6 CTO interpretation, User if foundational | Finite bank account with initial reserves/solvency rules versus explicit source/sink accounting for setup, purchases and reward | Recommend explicit source/sink ledger entries, no invented bank reserve limit. Player rent transfers conserve payer+payee. Blocks financial initialization/purchase/reward. |
 | P7 CTO interpretation, User if foundational | Reward before landing settlement versus after; own-asset and zero-rent dispatch; exact start landing dispatch | Recommend reward first within the same atomic Roll, own/zero-rent/start landing clears settlement, including exact-start crossing reward. Ordering affects affordability; dispatch affects turn completion, so these are not silently chosen by Team Lead. |
@@ -83,3 +83,23 @@ Technical owner: Team Lead for follow-up handoffs and integrated acceptance.
 Decision package delivered now. Next readiness/handoff checkpoint estimated
 15–30 minutes after canonical decisions arrive; implementation/merge ETA is
 not yet credible until policy and production data are fixed.
+
+## Money readiness update
+
+Canonical product clarification at 569a577 supersedes the proposals’ unresolved
+rounding alternatives. Pure rational-to-money quantization and canonical integer
+codec are ready independently of P1–P3/P5–P7. Team Lead selects bigint arithmetic
+and decimal strings as technical representation, with no Number conversion.
+The arithmetic helper accepts nonnegative integral numerator and positive integral
+denominator and returns 10*(numerator/(10*denominator)) with exact integer division.
+Zero is a valid arithmetic result: no invented minimum of 10. This does not decide
+whether a production asset may have zero price or a zero rent creates an event.
+Canonical amount codec accepts nonnegative decimal integers in the quoted scale;
+it does not silently round arbitrary input or require multiples of 10. Validity
+of reference/input prices and manually entered money is a separate domain gate.
+No finite economic maximum is selected: bigint correctness is proved above safe
+Number limits; any parser resource bound must be explicit and technically justified.
+No residual denomination question blocks this pure helper. Residual questions:
+may a generated asset quantizing to zero be admitted, what constraints apply to
+reference/manual prices, and what events/settlement follow zero obligations?
+These block affected board/domain integration, not exact arithmetic.
