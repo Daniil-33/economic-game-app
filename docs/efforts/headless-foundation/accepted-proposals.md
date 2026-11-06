@@ -51,3 +51,29 @@ Reconciled design/OpenSpec and turns handoff revision 2 now carry this dispositi
 RVW-001 is clarified in T05; no prisoner skipping is permitted. TASK-hf-turns
 may Explore/Propose against the locally integrated kernel, with separate fresh
 Apply acceptance required. Historical pending-gate text above is superseded.
+
+## Turns proposal: fc47e5f3aab39021299e003b95d4b20cf292fdaa
+
+Exact branch HEAD inspected and accepted for fresh Apply under acknowledged
+turns handoff revision 2. Author report's short reference 629d8f7 does not match
+the verified commit; this acceptance applies only to the full SHA above. Base is
+0d306f9f1fc273c7fd9577ae976f66b726310217. Three proposed files inspected in full;
+exact-range whitespace check passes; no implementation is accepted yet.
+
+Public targetTurnId on Roll/EndTurn, receipt identity changes, explicit turn/status
+state, revision-derived turn IDs and immutable allowlisted versioned scenario
+initialization are accepted technical refinements within the bounded harness.
+Fixture seeds never establish real board/economic semantics. Kernel-only
+unsupported-command tests must be updated without losing original invariants.
+
+CTO strict deadline/forced doubles interpretation remains binding. Atomic
+unsupported next-prisoner rejection and T05 free immediate-next precondition
+preserve RVW-001 disposition. Never skip prisoners. A completing command that
+cannot start the required participant rejects wholly without partial effects.
+
+Install only committed local lockfile dependencies; missing local tsc is an
+unperformed baseline check, not an implementation failure. Fresh Apply must
+verify strict compilation, all kernel/turn tests, independent full replay, Node
+runner and core boundary. Exact-head independent implementation review and
+current-head CI remain mandatory before merge. No hosting gate is waived;
+no remote operation is authorized merely by assumed authentication readiness.
