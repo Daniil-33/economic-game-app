@@ -2,10 +2,10 @@
 
 ```yaml
 id: TASK-hf-turns
-revision: 1
+revision: 2
 effort: EFF-headless-foundation
 project: economic-board-game
-source_commit: 0674733f68b754a14a68c32e8a51e1451c046808
+source_commit: 37eac12d1f70a46eb8caa6fce40da36408f54532
 owner: team-lead
 status: accepted
 ```
@@ -73,9 +73,14 @@ and residual risks. No completion claim without current-head acceptance evidence
 
 ## Dependencies
 
-TASK-hf-design proposal and TASK-hf-kernel accepted result. DO NOT START until
-Team Lead revision 2 pins accepted proposal, kernel SHA and finalized interface.
-Sequential ownership; no parallel edits to kernel contract.
+Kernel 37eac12d1f70a46eb8caa6fce40da36408f54532 is technically accepted after
+REV-hf-kernel-1 PASS with no findings and Team Lead reproduced typecheck/8 tests.
+Use its execution/receipt/setup contract (accepted proposal d989814 and design
+5da5697), locally integrated into the planning branch. Read reconciled design
+and OpenSpec in your launch base, plus docs/product.md CTO interpretation:
+turn boundary execution. Hosting/PR/CI remains a delivery gate, not local
+implementation authorization. Sequential ownership; kernel Engineer must not
+edit while this task owns extension of its contract.
 
 ## Delegated decisions
 
@@ -90,3 +95,28 @@ exact-deadline and both race orders; duplicate/rejected commands produce no
 repeated or partial effects; replay compares state/results/events; third doubles
 prevents movement/reward. Node local run and core dependency inspection.
 Independent review and required CI must apply to exact final head.
+
+## Revision 2 authorization and reconciliation
+
+Explore/Propose authorized; Apply is NOT yet authorized. Commit a bounded turns
+proposal and return it for Team Lead acceptance. Apply must start fresh through
+agentctl. Mandatory CTO rules: player commands strictly before deadline; Timeout
+at/after; no implicit timeout for late player commands. First/second forced
+doubles keep the same turn/quotas for 20 seconds and earn fresh bonus only after
+completion/mandatory settlement. Third doubles enters prison and ends without
+continuation before movement/reward. Revision and target turn ID guard old inputs.
+
+Resolve design RVW-001 consistently with reconciled T05: fixture assumes the
+immediately next ranked participant is not imprisoned. Do not skip imprisoned
+participants; reaching one stops atomically at the unsupported release boundary.
+A blocked transition must retain state/events/dice with an explicit rejection.
+Document fixture configuration, ownership and replay initialization without
+untrusted financial outcomes or arbitrary callbacks. No real board generator,
+prison release, house/offer actions, rewards or economy are authorized.
+
+Re-run kernel tests with new turn integration. K06 kernel-only assertions about
+unsupported commands are temporary: update them for completed integration while
+preserving setup order, no implicit BeginTurns, actor/phase rejection and K01-K09
+invariants. Explain all necessary public type changes in the proposal. Add
+T01-T09 and external Node runner; no server/UI. No global installs. Delivery
+access remains unverified; do not claim current-head CI, review or merge early.

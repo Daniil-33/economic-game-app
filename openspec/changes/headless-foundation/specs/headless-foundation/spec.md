@@ -1,6 +1,6 @@
-# Proposed headless foundation specification
+# Headless foundation specification
 
-Status: proposed. Contract details and source traceability:
+Status: accepted design, reconciled with CTO turn-boundary interpretation on 2026-11-06. Contract details and source traceability:
 ../../../../../docs/efforts/headless-foundation/design.md.
 Owners: K = TASK-hf-kernel; T = TASK-hf-turns. Scenario IDs are the effort
 acceptance matrix and downstream verification obligations.
@@ -136,18 +136,22 @@ implemented merely to create this fixture.
 
 #### Scenario: T05 — third double prison guard
 
-Given streak two and a would-be movement fixture with unresolved reward/effect,
+Given streak two, an immediately next ranked participant who is not imprisoned,
+and a would-be movement fixture with unresolved reward/effect,
 a double emits DiceRolled, PrisonEntered and TurnCompleted, resets streak and
-starts the next non-imprisoned participant. No movement/reward marker or effect
+starts that immediately next ranked participant. No imprisoned player is skipped;
+a sequence reaching an imprisoned next participant stops atomically at the
+unsupported prison-release boundary. No movement/reward marker or effect
 runs. Custody is symbolic, with no invented location or release behavior.
 
-### Requirement: Deadline and race policy pending disposition
+### Requirement: Accepted deadline and race policy
 
-The following scenarios SHALL become binding only after CTO semantic disposition:
-player commands require nowMs < deadline; Timeout requires nowMs >= deadline.
-Pre-roll forced doubles retain continuation until ordinary completion, with
-third doubles ending immediately. Team Lead SHALL update these scenarios to the
-durable disposition before turns Apply if this recommendation is changed.
+Per docs/product.md, CTO interpretation: turn boundary execution, player commands
+SHALL require nowMs < deadline; Timeout SHALL require nowMs >= deadline. Late
+player commands SHALL reject without implicit timeout effects. First/second
+pre-roll forced doubles SHALL retain same-turn continuation and quotas until
+completion and mandatory settlement, then start the earned fresh bonus turn.
+Third doubles SHALL enter prison immediately without continuation.
 
 #### Scenario: T06 — deadline edges and equality
 

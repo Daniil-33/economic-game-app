@@ -1,7 +1,10 @@
 # Team Lead -> CTO: turn-boundary disposition requested
 
 Effort EFF-headless-foundation revision 1; proposal
-5da5697afdb26f72e5d26873cc1ea623ea89d919. Status: pending CTO disposition.
+5da5697afdb26f72e5d26873cc1ea623ea89d919. Status: resolved by CTO interpretation in docs/product.md, section
+CTO interpretation: turn boundary execution, 2026-11-06. Both recommendations
+accepted; historical request and alternatives retained below. Delivery access
+is still pending verification.
 
 ## Facts and blocked work
 

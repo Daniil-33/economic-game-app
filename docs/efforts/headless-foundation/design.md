@@ -1,6 +1,6 @@
 # Headless foundation design
 
-Status: proposed for Team Lead acceptance; no Apply authorization.
+Status: accepted technical design; CTO turn-boundary interpretation reconciled on 2026-11-06. Task-specific fresh Apply authorization remains required.
 Task TASK-hf-design, handoff revision 1. Exploration base
 507ca02b910904864aec6b3b2910bcc4adedef50; accepted-source baseline
 0674733f68b754a14a68c32e8a51e1451c046808.
@@ -103,7 +103,7 @@ TurnCompleted before the next TurnStarted, resets streak and bypasses every
 movement/reward hook. Prison location is symbolic custody, not a board index.
 An upcoming prisoner's release attempt is an explicit unsupported boundary.
 
-PROPOSED, requiring CTO disposition before turns Apply: player intents allowed
+Accepted CTO interpretation (docs/product.md, CTO interpretation: turn boundary execution): player intents allowed
 only at nowMs < deadline; Timeout allowed at nowMs >= deadline. Late player
 commands reject DEADLINE_REACHED without silently executing timeout. Timeout
 is targeted to turnId and revision, preventing a delayed timer from touching a
@@ -113,14 +113,11 @@ At equality EndTurn rejects even if delivered first; due Timeout then succeeds
 at unchanged revision. If Timeout succeeds first, old EndTurn rejects stale
 revision. No scheduler runs inside the core.
 
-Accepted sources do not explicitly select deadline equality, late-delivery
-policy, or whether pre-roll timeout doubles immediately start a fresh turn or
-retain the promised 20-second continuation. Recommendation: every roll follows
-the same settlement/completion path; doubles bonus starts only at completion,
-so forced rolls retain 20 seconds unless third doubles ends immediately.
-Alternatives are player priority at equality and immediate fresh doubles turns;
-these change observable gameplay. Team Lead must route this focused gate to CTO.
-Kernel contract review can continue; turns Apply waits for durable disposition.
+CTO disposed the equality/late-delivery and forced-doubles interactions on
+2026-11-06 in docs/product.md. First/second forced doubles retain the same turn
+and quotas for the promised 20 seconds; the bonus begins after completion and
+mandatory settlement. Third doubles enters prison immediately and ends the turn
+without continuation. These semantics are binding, not recommendations.
 
 ## Explicit fixture boundary
 

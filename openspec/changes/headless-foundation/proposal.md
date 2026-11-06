@@ -1,6 +1,6 @@
 # Headless foundation
 
-Status: proposed; TASK-hf-design revision 1. No Apply authorization.
+Status: accepted technical proposal; CTO semantics reconciled on 2026-11-06. Task-specific Apply authorization remains required.
 
 ## Why
 
@@ -19,6 +19,6 @@ and unresolved semantic gate are in
 Future packages/game-core kernel then turns, and external Node scenario runner.
 This change currently contains documentation/specifications only. No economy,
 board generation, prison release, server, persistence, frontend or deployment.
-All normative SHALL statements in this change are proposed until accepted.
-Deadline equality and forced-double continuation require CTO disposition before
-turns Apply. Team Lead acceptance must pin the proposal SHA in new handoffs.
+Normative requirements follow accepted technical design and the CTO interpretation
+in docs/product.md, CTO interpretation: turn boundary execution. Downstream
+handoffs pin exact upstream SHAs; fresh Apply remains a separate gate.

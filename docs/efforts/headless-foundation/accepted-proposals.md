@@ -35,3 +35,19 @@ Apply can proceed; unavailable delivery evidence must not be claimed as passing.
 Kernel Engineer verifies and commits implementation, requests independent review
 and Team Lead technical acceptance. Changes to the public contract return to Team
 Lead. Turns remains blocked pending accepted kernel and CTO semantic disposition.
+
+## Kernel technical result and CTO reconciliation — 2026-11-06
+
+Kernel exact implementation 37eac12d1f70a46eb8caa6fce40da36408f54532 is technically
+accepted: REV-hf-kernel-1 PASS, no findings; Team Lead reran strict typecheck and
+all eight tests successfully at that head. Local integration supports downstream
+work; PR/current-head CI and remote merge are not established or waived.
+
+CTO canonical product interpretation resolves T06/T07: strict-before player
+commands, at-or-after Timeout, no implicit timeout; first/second forced doubles
+retain same turn/quotas for 20 seconds then earned bonus after settlement;
+third double goes immediately to prison before movement/reward without continuation.
+Reconciled design/OpenSpec and turns handoff revision 2 now carry this disposition.
+RVW-001 is clarified in T05; no prisoner skipping is permitted. TASK-hf-turns
+may Explore/Propose against the locally integrated kernel, with separate fresh
+Apply acceptance required. Historical pending-gate text above is superseded.
