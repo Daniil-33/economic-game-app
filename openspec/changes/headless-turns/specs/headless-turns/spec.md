@@ -1,6 +1,7 @@
 # Headless turns implementation specification
 
-Status: proposed refinement of accepted T01–T09; no new product mechanics.
+Status: accepted refinement at fc47e5f; implemented locally, delivery gates open.
+No new product mechanics.
 Normative scenarios: ../../../headless-foundation/specs/headless-foundation/spec.md.
 The proposal in ../../proposal.md defines the public type refinements for review.
 
