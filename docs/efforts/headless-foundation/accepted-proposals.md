@@ -77,3 +77,27 @@ verify strict compilation, all kernel/turn tests, independent full replay, Node
 runner and core boundary. Exact-head independent implementation review and
 current-head CI remain mandatory before merge. No hosting gate is waived;
 no remote operation is authorized merely by assumed authentication readiness.
+
+## Turns implementation disposition — b0523d8aa4c55816086509566085d41c8e8ab38d
+
+Technically accepted for the exact range
+fc47e5f3aab39021299e003b95d4b20cf292fdaa..b0523d8aa4c55816086509566085d41c8e8ab38d
+under turns handoff revision 2. REV-hf-turns-1 PASS has zero findings and verifies
+T01-T09, retained K01-K09, CTO deadline/forced-double semantics, fixture limits,
+atomic prisoner boundary and complete replay. RVW-001 clarification is verified.
+Report: /srv/agent-runtime/state/reviews/REV-hf-turns-1-report.md (private runtime).
+
+Team Lead independently reproduced npm run typecheck, npm test (20/20 passing),
+npm run replay (11 scenarios matched) and exact-range git diff --check at this
+head. Worktree remained clean and HEAD unchanged. The independent reviewer
+verified compilation/artifacts read-only, 19 directly run tests and all 11 direct
+runner scenarios; the subprocess test encountered sandbox EPERM. This is a
+review execution limitation, not a finding. The Team Lead standard invocation
+passed that test; hosted current-head CI must still include it.
+
+No implementation return or risk exception is needed. Technical acceptance does
+not mean merged delivery or effort completion. Task remains blocked on verified
+hosting permissions, protection, PR and current-head CI. No push/PR/merge mutation
+was performed. Any new implementation head invalidates this head-specific
+acceptance until verification and independent review rerun. Further integration
+must check the resulting current head before merge; no gate is waived.
