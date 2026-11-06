@@ -1,6 +1,6 @@
 # Headless kernel verification refinement
 
-Status: proposed; supplements the accepted upstream contract at
+Status: accepted for bounded implementation (proposal d989814); supplements the accepted upstream contract at
 5da5697afdb26f72e5d26873cc1ea623ea89d919 and kernel handoff revision 2.
 No turns behavior is authorized here. Upstream K01–K09 remain the acceptance IDs.
 
