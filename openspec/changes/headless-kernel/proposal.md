@@ -1,6 +1,8 @@
 # Headless kernel implementation proposal
 
-Status: proposed for Team Lead acceptance; no Apply authorization.
+Status: accepted for Apply at d98981487e59f6044c68afa0eb50e144cde9448d.
+Disposition: docs/efforts/headless-foundation/accepted-proposals.md in the
+Team Lead project checkout; handoff revision 2. Delivery acceptance is pending.
 Task: TASK-hf-kernel, handoff revision 2.
 Exploration base: 2cc7a38c295644118bb8469fbbf74b58952218aa.
 Accepted upstream contract: 5da5697afdb26f72e5d26873cc1ea623ea89d919.

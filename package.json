@@ -1,0 +1,17 @@
+{
+  "name": "economic-board-game",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "tsc -p packages/game-core/tsconfig.json && tsc -p tsconfig.tests.json",
+    "typecheck": "tsc -p packages/game-core/tsconfig.json && tsc -p tsconfig.tests.json --noEmit",
+    "test": "npm run build && node --test dist/tests/*.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "26.0.0",
+    "typescript": "5.9.3"
+  }
+}
