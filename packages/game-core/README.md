@@ -76,3 +76,18 @@ Run `npm run replay` for the separately compiled Node runner in
 apps/headless-runner. It compares full results (including rejected/duplicate),
 ordered events, receipts, consumed dice and final state across independent
 initializations, reporting every unsupported boundary explicitly.
+
+The independent money utility exports `quantizeMoney(numerator: bigint,
+denominator: bigint): bigint`, `parseMoney(input: unknown): bigint`, and
+`formatMoney(amount: bigint): string`. Quantization returns
+`10n * (numerator / (10n * denominator))` for nonnegative numerator and positive
+denominator. Keep intermediates exact and call it once at the final boundary.
+Zero is valid; there is no rescaling, minimum payment or economic maximum.
+The codec preserves unsigned canonical ASCII decimal integers, including values
+not divisible by ten. Type or syntax failures throw TypeError; negative amounts
+or nonpositive denominators throw RangeError. Error messages are not contractual.
+These helpers do not change session state, commands, events or replay formats.
+
+There is no artificial parser digit cap. Native bigint/string capacity and memory
+limit computation and conversion; this is not production input admission policy.
+Callers must establish resource and domain validation at their integration boundary.

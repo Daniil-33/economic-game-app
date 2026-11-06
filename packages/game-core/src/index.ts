@@ -1,3 +1,4 @@
+export { quantizeMoney, parseMoney, formatMoney } from './money.js';
 export * from './types.js';
 import { RULES_VERSION, type CreationResult, type EngineResult, type Envelope, type ErrorCode, type GameEvent, type GameState, type RequestIdentity } from './types.js';
 import { canonical, identifier, record, validateEnvelope, versions } from './validation.js';
